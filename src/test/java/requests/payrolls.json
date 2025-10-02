@@ -1,0 +1,201 @@
+{
+  "create_DeductionsDexceeded":{
+    "action": "createPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": 200 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": 201 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "create_EmptyEarning":{
+    "action": "createPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollData": {
+      "earnings": [],
+      "deductions": [
+        { "description": "Taxes", "amount": 50 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "create_NegativeEarning": {
+    "action": "createPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": -200 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": 50 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "create_ZeroTotalEarning": {
+    "action": "createPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": 0 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": 0 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "create_NegativeDeduction": {
+    "action": "createPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": 200 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": -50 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "update_DeductionsDexceeded": {
+    "action": "updatePayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollId": "wJcj5HcZgmPgCjSydQdt",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": 200 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": 201 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+
+  "update_EmptyEarning": {
+    "action": "updatePayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollId": "wJcj5HcZgmPgCjSydQdt",
+    "payrollData": {
+      "earnings": [],
+      "deductions": [
+        { "description": "Taxes", "amount": 50 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "update_NegativeEarning": {
+    "action": "updatePayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollId": "wJcj5HcZgmPgCjSydQdt",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": -200 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": 50 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+
+  "update_ZeroEarning": {
+    "action": "updatePayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollId": "wJcj5HcZgmPgCjSydQdt",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": 0 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": 0 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+
+  "update_NegativeDeduction": {
+    "action": "updatePayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "payrollId": "wJcj5HcZgmPgCjSydQdt",
+    "payrollData": {
+      "earnings": [
+        { "description": "Salary", "amount": 200 }
+      ],
+      "deductions": [
+        { "description": "Taxes", "amount": -50 }
+      ],
+      "payrollDate": "2025-01-13T10:15:00.000Z",
+      "payrollMonth": "2025-01-13T00:00:00.000Z",
+      "volatile": true
+    }
+  },
+  "delete_InvalidEmployeeId": {
+    "action": "deletePayroll",
+    "employeeId": "asdf",
+    "payrollId": "inventedID2sCJiOkhWL"
+  },
+
+  "delete_InvalidPayrollId": {
+    "action": "deletePayroll",
+    "employeeId": "inventedID2sCJiOkhWL",
+    "payrollId": "asd"
+  },
+  "getAll_InvalidType": {
+    "action": "getAllPayrollsByEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "id": 123
+  },
+
+  "getAll_InvalidLength": {
+    "action": "getAllPayrollsByEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "id": "abc"
+  },
+
+  "getAll_NullParameter": {
+    "action": "getAllPayrollsByEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "id": null
+  },
+  "getLatest_InvalidType": {
+    "action": "getLatestPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "id": 123
+  },
+
+  "getLatest_InvalidLength": {
+    "action": "getLatestPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "id": "abc"
+  },
+
+  "getLatest_NullParameter": {
+    "action": "getLatestPayroll",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "id": null
+  }
+}

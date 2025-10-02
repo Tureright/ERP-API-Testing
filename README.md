@@ -20,6 +20,6 @@ Replace `<DeployedURL>` with your actual deployed API endpoint:
 mvn test -DBASE_URL="<DeployedURL>"
 ```
 
-### 2. Pass the URL via Maven command
+### 2. Set an environment variable
 
 You can set the environment variable BASE_URL in your system.
