@@ -166,36 +166,30 @@
   },
   "getAll_InvalidType": {
     "action": "getAllPayrollsByEmployee",
-    "employeeId": "0ICpd0V13GjGvlbuAIWW",
-    "id": 123
+    "employeeId": 123
   },
 
   "getAll_InvalidLength": {
     "action": "getAllPayrollsByEmployee",
-    "employeeId": "0ICpd0V13GjGvlbuAIWW",
-    "id": "abc"
+    "employeeId": "abc"
   },
 
   "getAll_NullParameter": {
     "action": "getAllPayrollsByEmployee",
-    "employeeId": "0ICpd0V13GjGvlbuAIWW",
-    "id": null
+    "employeeId": null
   },
   "getLatest_InvalidType": {
     "action": "getLatestPayroll",
-    "employeeId": "0ICpd0V13GjGvlbuAIWW",
-    "id": 123
+    "employeeId": 123
   },
 
   "getLatest_InvalidLength": {
     "action": "getLatestPayroll",
-    "employeeId": "0ICpd0V13GjGvlbuAIWW",
-    "id": "abc"
+    "employeeId": "abc"
   },
 
   "getLatest_NullParameter": {
     "action": "getLatestPayroll",
-    "employeeId": "0ICpd0V13GjGvlbuAIWW",
-    "id": null
+    "employeeId": null
   }
 }

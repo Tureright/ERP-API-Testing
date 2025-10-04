@@ -1,8 +1,9 @@
 @getPayrollById
 Feature: Negative test cases for getPayrollById request parameters
 
-  Background: Initial configuraion
+  Background: Initial configuration
     * url baseUrl
+    * header Content-Type = 'application/json'
 
   Scenario: TC_P1.1: Request with an invalid parameter type (not a string)
     Given params { action: 'getPayrollById', employeeId: "0ICpd0V13GjGvlbuAIWW", id: 123}
