@@ -1,0 +1,197 @@
+{
+  "getEmployee_InvalidType": {
+    "action": "getEmployeeById",
+    "id": 123
+  },
+  "getEmployee_InvalidLength": {
+    "action": "getEmployeeById",
+    "id": "abc"
+  },
+  "getEmployee_NullParameter": {
+    "action": "getEmployeeById",
+    "id": null
+  },
+  "createEmployee_NationalId_Short": {
+    "action": "createEmployee",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "123456789",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "createEmployee_NationalId_Long": {
+    "action": "createEmployee",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "12345678911",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "createEmployee_NationalId_NonNumeric": {
+    "action": "createEmployee",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "123456789c",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "createEmployee_NationalId_InvalidProvince": {
+    "action": "createEmployee",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "8415457816",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "createEmployee_NationalId_ThirdDigitInvalid": {
+    "action": "createEmployee",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "1765457816",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "createEmployee_NationalId_CheckDigitInvalid": {
+    "action": "createEmployee",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "1710034067",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "updateEmployee_NationalId_Short": {
+    "action": "updateEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "123456789",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "updateEmployee_NationalId_Long": {
+    "action": "updateEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "12345678911",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "updateEmployee_NationalId_NonNumeric": {
+    "action": "updateEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "123456789c",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "updateEmployee_NationalId_InvalidProvince": {
+    "action": "updateEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "8415457816",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "updateEmployee_NationalId_ThirdDigitInvalid": {
+    "action": "updateEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "1765457816",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "updateEmployee_NationalId_CheckDigitInvalid": {
+    "action": "updateEmployee",
+    "employeeId": "0ICpd0V13GjGvlbuAIWW",
+    "employeeData": {
+      "firstName": "Roberto Luis",
+      "lastName": "Sanchez Obregon",
+      "nationalId": "1710034067",
+      "birthDate": "1990-05-20",
+      "institutionalEmail": "Josesito.Pedrez@gardneracademy.edu.ec",
+      "workPeriods": [
+        { "jobPosition": "Profesor Titular", "startDate": "2020-01-01", "endDate": "2021-01-01" },
+        { "jobPosition": "Profesor Titular", "startDate": "2021-01-01", "endDate": "Actualmente trabajando" }
+      ]
+    }
+  },
+  "deleteEmployee_NonExistentId": {
+    "action": "deleteEmployee",
+    "employeeId": "123a"
+  },
+  "deleteEmployee_NullId": {
+    "action": "deleteEmployee",
+    "employeeId": null
+  }
+
+}
