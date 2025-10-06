@@ -1,0 +1,2017 @@
+{
+	"info": {
+		"_postman_id": "f5a8e7a2-85f8-4da5-8770-3e1ef911c5ca",
+		"name": "API Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28608011",
+		"_collection_link": "https://erp-gardneracademy.postman.co/workspace/ERP-GardnerAcademy-Workspace~bb6470f3-ebfb-46de-8269-f1ead930b85e/collection/28608011-f5a8e7a2-85f8-4da5-8770-3e1ef911c5ca?action=share&source=collection_link&creator=28608011"
+	},
+	"item": [
+		{
+			"name": "HappyPath: Employee&Payroll",
+			"item": [
+				{
+					"name": "createEmployee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for the response status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Save employeeId from the response to an environment variable\r",
+									"const responseJson = pm.response.json();\r",
+									"if (responseJson.employeeId) {\r",
+									"    pm.environment.set(\"employeeId\", responseJson.employeeId);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"createEmployee\",\r\n    \"employeeData\": {\r\n        \"firstName\": \"Tester\",\r\n        \"lastName\": \"Developer\",\r\n        \"nationalId\": \"123456789\",\r\n        \"birthDate\": \"1990-05-20T00:00:00.000Z\",\r\n        \"institutionalEmail\": \"tester.developer@instituto.edu.ec\",\r\n        \"workPeriods\": [\r\n            {\r\n                \"jobPosition\": \"Profesor Tester\",\r\n                \"startDate\": \"2020-04-05T00:00:00.000Z\",\r\n                \"endDate\": \"2021-03-02T00:00:00.000Z\"\r\n            },\r\n            {\r\n                \"jobPosition\": \"Profesor Tester\",\r\n                \"startDate\": \"2021-02-05T00:00:00.000Z\",\r\n                \"endDate\": \"Actualmente trabajando\"\r\n            }\r\n        ],\r\n        \"adminId\": \"Adm1n123\",\r\n        \"suspended\": false,\r\n        \"calendarId\": \"MyCalendar123\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllEmployees",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema of the data array and its objects\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.data.forEach(employee => {\r",
+									"        pm.expect(employee).to.be.an('object');\r",
+									"        pm.expect(employee).to.have.all.keys('id', 'firstName', 'lastName', 'nationalId', 'birthDate', 'workPeriods', 'institutionalEmail', 'adminId', 'suspended', 'calendarId', 'driveFolderId');\r",
+									"\r",
+									"        pm.expect(employee.workPeriods).to.be.an('array');\r",
+									"\r",
+									"        employee.workPeriods.forEach(workPeriod => {\r",
+									"            pm.expect(workPeriod).to.be.an('object');\r",
+									"            pm.expect(workPeriod).to.have.all.keys('jobPosition', 'startDate', 'endDate');\r",
+									"        });\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The suspended field must be a boolean value\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    responseData.data.forEach(employee => {\r",
+									"        pm.expect(employee.suspended).to.be.a('boolean');\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getAllEmployees",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getAllEmployees"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmployee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for the response status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"updateEmployee\",\r\n    \"employeeId\": \"{{employeeId}}\",\r\n    \"employeeData\": {\r\n        \"firstName\": \"Tester\",\r\n        \"lastName\": \"Changed\",\r\n        \"nationalId\": \"123456789\",\r\n        \"birthDate\": \"1990-05-20T00:00:00.000Z\",\r\n        \"institutionalEmail\": \"tester.developer@instituto.edu.ec\",\r\n        \"workPeriods\": [\r\n            {\r\n                \"jobPosition\": \"Profesor Tester\",\r\n                \"startDate\": \"2020-04-05T00:00:00.000Z\",\r\n                \"endDate\": \"2021-03-02T00:00:00.000Z\"\r\n            },\r\n            {\r\n                \"jobPosition\": \"Profesor Tester\",\r\n                \"startDate\": \"2021-02-05T00:00:00.000Z\",\r\n                \"endDate\": \"Actualmente trabajando\"\r\n            }\r\n        ],\r\n        \"adminId\": \"Adm1n123\",\r\n        \"suspended\": false,\r\n        \"calendarId\": \"MyCalendar123\",\r\n        \"driveFolderId\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployeeById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    \r",
+									"    const data = responseData.data;\r",
+									"    pm.expect(data).to.be.an('object');\r",
+									"    pm.expect(data).to.have.property('id');\r",
+									"    pm.expect(data).to.have.property('firstName');\r",
+									"    pm.expect(data).to.have.property('lastName');\r",
+									"    pm.expect(data).to.have.property('workPeriods').that.is.an('array');\r",
+									"\r",
+									"    // Save adminId to environment variable\r",
+									"    pm.environment.set(\"adminId\", data.adminId);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"WorkPeriods is an array and contains at least one element with valid fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data.workPeriods).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.data.workPeriods.forEach(function(workPeriod) {\r",
+									"        pm.expect(workPeriod).to.be.an('object');\r",
+									"        pm.expect(workPeriod.jobPosition).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1);\r",
+									"        pm.expect(workPeriod.startDate).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1);\r",
+									"        pm.expect(workPeriod.endDate).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1);\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getEmployeeById&id={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getEmployeeById"
+								},
+								{
+									"key": "id",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfilePicture",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response schema is valid\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.all.keys('success', 'error');\r",
+									"    pm.expect(responseData.success).to.be.a('boolean');\r",
+									"    pm.expect(responseData.error).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getProfilePicture&employeeId={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getProfilePicture"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployeeByAdminId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getEmployeeByAdminId&adminId={{adminId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getEmployeeByAdminId"
+								},
+								{
+									"key": "adminId",
+									"value": "{{adminId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get13erSueldoByEmployeeId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response contains required fields in the data object\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+									"\r",
+									"    const requiredFields = [\r",
+									"        \"diciembre de 2024\",\r",
+									"        \"enero de 2025\",\r",
+									"        \"febrero de 2025\",\r",
+									"        \"marzo de 2025\",\r",
+									"        \"abril de 2025\",\r",
+									"        \"mayo de 2025\",\r",
+									"        \"junio de 2025\",\r",
+									"        \"julio de 2025\",\r",
+									"        \"agosto de 2025\",\r",
+									"        \"septiembre de 2025\",\r",
+									"        \"octubre de 2025\",\r",
+									"        \"noviembre de 2025\"\r",
+									"    ];\r",
+									"\r",
+									"    requiredFields.forEach(field => {\r",
+									"        pm.expect(responseData.data).to.have.property(field);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each month in the response is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('data').that.is.an('object');\r",
+									"    \r",
+									"    Object.values(responseData.data).forEach(function(monthValue) {\r",
+									"        pm.expect(monthValue).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is true\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.success).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=get13erSueldoByEmployeeId&employeeId={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "get13erSueldoByEmployeeId"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMonthsFor14Sueldo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.all.keys('success', 'data');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success is a boolean value\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.success).to.exist.and.to.be.a('boolean');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getMonthsFor14Sueldo&employeeId={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getMonthsFor14Sueldo"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPayroll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"pm.test(\"Payroll creado\", () => {\r",
+									"    pm.expect(json.success).to.be.true;\r",
+									"    pm.environment.set(\"payrollId\", json.data.payrollId);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"createPayroll\",\r\n    \"employeeId\": \"{{employeeId}}\",\r\n    \"payrollData\": {\r\n        \"earnings\": [\r\n            {\r\n                \"description\": \"Sueldo\",\r\n                \"amount\": 1500\r\n            },\r\n            {\r\n                \"description\": \"Horas extra\",\r\n                \"amount\": 200\r\n            }\r\n        ],\r\n        \"deductions\": [\r\n            {\r\n                \"description\": \"Seguro\",\r\n                \"amount\": 100\r\n            },\r\n            {\r\n                \"description\": \"Impuestos\",\r\n                \"amount\": 50\r\n            }\r\n        ],\r\n        \"payrollDate\": \"2023-02-20T00:00:00.000Z\",\r\n        \"payrollMonth\": \"2023-02-20T00:00:00.000Z\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPayrolls",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getAllPayrolls",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getAllPayrolls"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPayrollsByEmployeeId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema of the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('success').that.is.a('boolean');\r",
+									"    pm.expect(responseData).to.have.property('data').that.is.an('array');\r",
+									"\r",
+									"    responseData.data.forEach(payroll => {\r",
+									"        pm.expect(payroll).to.be.an('object');\r",
+									"        pm.expect(payroll).to.have.property('id').that.is.a('string');\r",
+									"        pm.expect(payroll).to.have.property('employeeId').that.is.a('string');\r",
+									"        pm.expect(payroll).to.have.property('earnings').that.is.an('array');\r",
+									"\r",
+									"        payroll.earnings.forEach(earning => {\r",
+									"            pm.expect(earning).to.be.an('object');\r",
+									"            pm.expect(earning).to.have.property('description').that.is.a('string');\r",
+									"            pm.expect(earning).to.have.property('amount').that.is.a('number');\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(payroll).to.have.property('deductions').that.is.an('array');\r",
+									"\r",
+									"        payroll.deductions.forEach(deduction => {\r",
+									"            pm.expect(deduction).to.be.an('object');\r",
+									"            pm.expect(deduction).to.have.property('description').that.is.a('string');\r",
+									"            pm.expect(deduction).to.have.property('amount').that.is.a('number');\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(payroll).to.have.property('payrollDate').that.is.a('string');\r",
+									"        pm.expect(payroll).to.have.property('payrollMonth').that.is.a('string');\r",
+									"        pm.expect(payroll).to.have.property('volatile').that.is.a('boolean');\r",
+									"        pm.expect(payroll).to.have.property('driveId').that.is.a('string');\r",
+									"        pm.expect(payroll).to.have.property('type').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Data is an array with at least one element\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each payroll record has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.success).to.exist;\r",
+									"\r",
+									"    const payrolls = responseData.data;\r",
+									"    pm.expect(payrolls).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    payrolls.forEach(function(payroll) {\r",
+									"        pm.expect(payroll).to.have.all.keys('id', 'employeeId', 'earnings', 'deductions', 'payrollDate', 'payrollMonth', 'volatile', 'driveId', 'type');\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getAllPayrollsByEmployee&employeeId={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getAllPayrollsByEmployee"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPayrollById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const p = pm.response.json().data;\r",
+									"\r",
+									"pm.test(\"GetPayrollById OK\", () => pm.expect(p.id).to.eql(pm.environment.get(\"payrollId\")));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getPayrollById&employeeId={{employeeId}}&id={{payrollId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getPayrollById"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								},
+								{
+									"key": "id",
+									"value": "{{payrollId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLatestPayroll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate the structure of the data object\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('object');\r",
+									"    \r",
+									"    const data = responseData.data;\r",
+									"    pm.expect(data).to.have.all.keys('firstName', 'lastName', 'nationalId', 'jobPosition', 'payrollDate', 'payrollMonth', 'earnings', 'deductions');\r",
+									"    \r",
+									"    pm.expect(data.earnings).to.be.an('array');\r",
+									"    data.earnings.forEach(function(earning) {\r",
+									"        pm.expect(earning).to.be.an('object');\r",
+									"        pm.expect(earning).to.have.all.keys('description', 'amount');\r",
+									"        pm.expect(earning.description).to.be.a('string');\r",
+									"        pm.expect(earning.amount).to.be.a('number');\r",
+									"    });\r",
+									"    \r",
+									"    pm.expect(data.deductions).to.be.an('array');\r",
+									"    data.deductions.forEach(function(deduction) {\r",
+									"        pm.expect(deduction).to.be.an('object');\r",
+									"        pm.expect(deduction).to.have.all.keys('description', 'amount');\r",
+									"        pm.expect(deduction.description).to.be.a('string');\r",
+									"        pm.expect(deduction.amount).to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First name and last name must be non-empty strings\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+									"\r",
+									"    const { firstName, lastName } = responseData.data;\r",
+									"\r",
+									"    pm.expect(firstName).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"First name should not be empty\");\r",
+									"    pm.expect(lastName).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Last name should not be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Earnings and deductions are arrays with at least one element containing valid descriptions and amounts\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+									"\r",
+									"    // Test for earnings array\r",
+									"    pm.expect(responseData.data.earnings).to.be.an('array').that.is.not.empty;\r",
+									"    responseData.data.earnings.forEach(function(earning) {\r",
+									"        pm.expect(earning).to.be.an('object');\r",
+									"        pm.expect(earning.description).to.exist.and.to.be.a('string').that.is.not.empty;\r",
+									"        pm.expect(earning.amount).to.exist.and.to.be.a('number').that.is.not.equal(0);\r",
+									"    });\r",
+									"\r",
+									"    // Test for deductions array\r",
+									"    pm.expect(responseData.data.deductions).to.be.an('array').that.is.not.empty;\r",
+									"    responseData.data.deductions.forEach(function(deduction) {\r",
+									"        pm.expect(deduction).to.be.an('object');\r",
+									"        pm.expect(deduction.description).to.exist.and.to.be.a('string').that.is.not.empty;\r",
+									"        pm.expect(deduction.amount).to.exist.and.to.be.a('number').that.is.not.equal(0);\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getLatestPayroll&employeeId={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getLatestPayroll"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setPayrollTemplate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the structure of the formattedPayroll object\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('object').that.has.property('formattedPayroll').that.is.an('object');\r",
+									"    \r",
+									"    const formattedPayroll = responseData.data.formattedPayroll;\r",
+									"    \r",
+									"    pm.expect(formattedPayroll).to.include.keys('id', 'employeeId', 'firstName', 'lastName', 'nationalId', 'birthDate', 'jobPosition', 'earnings', 'deductions', 'payrollDate', 'payrollMonth', 'summary', 'driveId', 'type');\r",
+									"    \r",
+									"    pm.expect(formattedPayroll.earnings).to.be.an('array');\r",
+									"    pm.expect(formattedPayroll.deductions).to.be.an('array');\r",
+									"    \r",
+									"    formattedPayroll.earnings.forEach(function(earning) {\r",
+									"        pm.expect(earning).to.include.keys('description', 'amount');\r",
+									"        pm.expect(earning.description).to.be.a('string');\r",
+									"        pm.expect(earning.amount).to.be.a('number');\r",
+									"    });\r",
+									"    \r",
+									"    formattedPayroll.deductions.forEach(function(deduction) {\r",
+									"        pm.expect(deduction).to.include.keys('description', 'amount');\r",
+									"        pm.expect(deduction.description).to.be.a('string');\r",
+									"        pm.expect(deduction.amount).to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Earnings and Deductions are arrays containing at least one entry with valid fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+									"    pm.expect(responseData.data.formattedPayroll).to.exist.and.to.be.an('object');\r",
+									"\r",
+									"    const earnings = responseData.data.formattedPayroll.earnings;\r",
+									"    const deductions = responseData.data.formattedPayroll.deductions;\r",
+									"\r",
+									"    pm.expect(earnings).to.be.an('array').that.is.not.empty;\r",
+									"    pm.expect(deductions).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    earnings.forEach(entry => {\r",
+									"        pm.expect(entry).to.be.an('object');\r",
+									"        pm.expect(entry.description).to.exist.and.to.be.a('string').that.is.not.empty;\r",
+									"        pm.expect(entry.amount).to.exist.and.to.be.a('number');\r",
+									"    });\r",
+									"\r",
+									"    deductions.forEach(entry => {\r",
+									"        pm.expect(entry).to.be.an('object');\r",
+									"        pm.expect(entry.description).to.exist.and.to.be.a('string').that.is.not.empty;\r",
+									"        pm.expect(entry.amount).to.exist.and.to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"setPayrollTemplate\",\r\n    \"newPayroll\": {\r\n        \"id\": \"{{payrollId}}\",\r\n        \"employeeId\": \"{{employeeId}}\",\r\n        \"firstName\": \"TesterTemplate\",\r\n        \"lastName\": \"Dev\",\r\n        \"nationalId\": \"0102030405\",\r\n        \"birthDate\": \"1990-06-15\",\r\n        \"jobPosition\": \"Ingeniero de Software\",\r\n        \"earnings\": [\r\n            {\r\n                \"description\": \"Sueldo\",\r\n                \"amount\": 1500.50\r\n            },\r\n            {\r\n                \"description\": \"Horas extra\",\r\n                \"amount\": 200.21\r\n            }\r\n        ],\r\n        \"deductions\": [\r\n            {\r\n                \"description\": \"Seguro\",\r\n                \"amount\": 100.00\r\n            },\r\n            {\r\n                \"description\": \"Impuestos\",\r\n                \"amount\": 50.75\r\n            }\r\n        ],\r\n        \"payrollDate\": \"2023-02-20T10:15:00.000Z\",\r\n        \"payrollMonth\": \"2023-02-01\",\r\n        \"summary\": \"resumen\",\r\n        \"driveId\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadPayroll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has a valid JSON schema\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object').that.has.all.keys('success', 'data');\r",
+									"    pm.expect(responseData.data).to.be.an('object').that.has.all.keys('success', 'downloadUrl');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is true\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.success).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"DownloadUrl must be a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+									"    pm.expect(responseData.data.downloadUrl).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"DownloadUrl should not be empty\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=downloadPayroll&employeeId={{employeeId}}&payrollId={{payrollId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "downloadPayroll"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								},
+								{
+									"key": "payrollId",
+									"value": "{{payrollId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployees13erSueldo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has required fields: success and data\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.all.keys('success', 'data');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema of the employee objects in the data array\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.data.forEach(employee => {\r",
+									"        pm.expect(employee).to.be.an('object');\r",
+									"        pm.expect(employee).to.have.all.keys('id', 'firstName', 'lastName', 'fullName', 'nationalId', 'institutionalEmail', 'workPeriods', 'total13er');\r",
+									"\r",
+									"        pm.expect(employee.workPeriods).to.be.an('array');\r",
+									"        employee.workPeriods.forEach(workPeriod => {\r",
+									"            pm.expect(workPeriod).to.be.an('object');\r",
+									"            pm.expect(workPeriod).to.have.all.keys('jobPosition', 'startDate', 'endDate');\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(employee.total13er).to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The total13er field must be a non-negative number\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.data.forEach(employee => {\r",
+									"        pm.expect(employee.total13er).to.be.a('number').that.is.at.least(0, \"total13er must be a non-negative number\");\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getEmployees13erSueldo",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getEmployees13erSueldo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPayrollsByAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema of the 'data' array elements\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('data').that.is.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.data.forEach(function(item) {\r",
+									"        pm.expect(item).to.be.an('object');\r",
+									"        pm.expect(item).to.have.all.keys('id', 'employeeId', 'earnings', 'deductions', 'payrollDate', 'payrollMonth', 'volatile', 'driveId', 'type');\r",
+									"\r",
+									"        pm.expect(item.earnings).to.be.an('array');\r",
+									"        item.earnings.forEach(function(earning) {\r",
+									"            pm.expect(earning).to.be.an('object');\r",
+									"            pm.expect(earning).to.have.all.keys('description', 'amount');\r",
+									"            pm.expect(earning.description).to.be.a('string');\r",
+									"            pm.expect(earning.amount).to.be.a('number');\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(item.deductions).to.be.an('array');\r",
+									"        item.deductions.forEach(function(deduction) {\r",
+									"            pm.expect(deduction).to.be.an('object');\r",
+									"            pm.expect(deduction).to.have.all.keys('description', 'amount');\r",
+									"            pm.expect(deduction.description).to.be.a('string');\r",
+									"            pm.expect(deduction.amount).to.be.a('number');\r",
+									"        });\r",
+									"\r",
+									"        pm.expect(item.payrollDate).to.be.a('string');\r",
+									"        pm.expect(item.payrollMonth).to.be.a('string');\r",
+									"        pm.expect(item.volatile).to.be.a('boolean');\r",
+									"        pm.expect(item.driveId).to.be.a('string');\r",
+									"        pm.expect(item.type).to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Earnings and Deductions Arrays Must Be Present and Contain At Least One Element\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.data.forEach(payroll => {\r",
+									"        pm.expect(payroll.earnings).to.be.an('array').that.is.not.empty;\r",
+									"        pm.expect(payroll.deductions).to.be.an('array').that.is.not.empty;\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=getPayrollsByAdmin&adminId={{adminId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "getPayrollsByAdmin"
+								},
+								{
+									"key": "adminId",
+									"value": "{{adminId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get13erSueldoByEmployeeId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}?action=get13erSueldoByEmployeeId&employeeId={{employeeId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "get13erSueldoByEmployeeId"
+								},
+								{
+									"key": "employeeId",
+									"value": "{{employeeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePayroll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response schema matches expected structure\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.all.keys('success', 'data');\r",
+									"    pm.expect(responseData.success).to.be.a('boolean');\r",
+									"    \r",
+									"    pm.expect(responseData.data).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.have.all.keys('message', 'updateData');\r",
+									"    \r",
+									"    pm.expect(responseData.data.message).to.be.a('string');\r",
+									"    \r",
+									"    pm.expect(responseData.data.updateData).to.be.an('object');\r",
+									"    pm.expect(responseData.data.updateData).to.have.all.keys('payrollId', 'driveId');\r",
+									"    pm.expect(responseData.data.updateData.payrollId).to.be.a('string');\r",
+									"    pm.expect(responseData.data.updateData.driveId).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"action\": \"updatePayroll\",\r\n  \"employeeId\": \"{{employeeId}}\",\r\n  \"payrollId\": \"{{payrollId}}\",\r\n  \"payrollData\": {\r\n    \"earnings\": [\r\n      {\"description\": \"Sueldo\", \"amount\": 1600},\r\n      {\"description\": \"Horas extra\", \"amount\": 250}\r\n    ],\r\n    \"deductions\": [\r\n      {\"description\": \"Seguro\", \"amount\": 100},\r\n      {\"description\": \"Impuestos\", \"amount\": 60}\r\n    ],\r\n    \"payrollDate\": \"2023-02-20T00:00:00.000Z\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePayroll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"action\": \"deletePayroll\",\r\n  \"employeeId\": \"{{employeeId}}\",\r\n  \"payrollId\": \"{{payrollId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/macros/s/AKfycbxDBOfSUnhWKrcvVYN6WpJTEjBOHXfXYC_1wY91u2mufHPrV8FdAJKgf2lJF7rueA-K/exec",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"macros",
+								"s",
+								"AKfycbxDBOfSUnhWKrcvVYN6WpJTEjBOHXfXYC_1wY91u2mufHPrV8FdAJKgf2lJF7rueA-K",
+								"exec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEmployee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"deleteEmployee\",\r\n    \"employeeId\": \"{{employeeId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Endpoints Debugging",
+			"item": [
+				{
+					"name": "Payrolls",
+					"item": [
+						{
+							"name": "getAllPayrolls",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}?action=getAllPayrolls",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getAllPayrolls"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getPayrollById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getPayrollById&employeeId=0ICpd0V13GjGvlbuAIWW&id=7CSBEEdK19QTAzwzquzQ",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getPayrollById"
+										},
+										{
+											"key": "employeeId",
+											"value": "0ICpd0V13GjGvlbuAIWW"
+										},
+										{
+											"key": "id",
+											"value": "7CSBEEdK19QTAzwzquzQ"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createPayroll",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"createPayroll\",\r\n    \"employeeId\": \"0ICpd0V13GjGvlbuAIWW\",\r\n    \"payrollData\": {\r\n        \"earnings\": [\r\n            {\r\n                \"description\": \"Sueldo\",\r\n                \"amount\": 460.00\r\n            },\r\n            {\r\n                \"description\": \"Fondo de reserva\",\r\n                \"amount\": 38.32\r\n            }\r\n        ],\r\n        \"deductions\": [\r\n            {\r\n                \"description\": \"Aporte personal\",\r\n                \"amount\": 43.47\r\n            }\r\n        ],\r\n        \"payrollDate\": \"2025-01-13T10:15:00.000Z\",\r\n        \"payrollMonth\": \"2025-01-13T00:00:00.000Z\",\r\n        \"volatile\": true\r\n    }\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletePayroll",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"action\": \"deletePayroll\",\r\n  \"employeeId\": \"LKAVuPKxzobnkMPbUWrW\",\r\n  \"payrollId\": \"AhCuDq6g732sCJiOkhWL\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updatePayroll",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"updatePayroll\",\r\n    \"employeeId\": \"0ICpd0V13GjGvlbuAIWW\",\r\n    \"payrollId\": \"7CSBEEdK19QTAzwzquzQ\",\r\n    \"payrollData\": {\r\n        \"earnings\": [\r\n            {\r\n                \"description\": \"Sueldo\",\r\n                \"amount\": 1600\r\n            },\r\n            {\r\n                \"description\": \"Horas extra\",\r\n                \"amount\": 250\r\n            }\r\n        ],\r\n        \"deductions\": [\r\n            {\r\n                \"description\": \"Seguro\",\r\n                \"amount\": 100\r\n            },\r\n            {\r\n                \"description\": \"Impuestos\",\r\n                \"amount\": 60\r\n            }\r\n        ],\r\n        \"payrollDate\": \"2024-08-25T00:00:00Z\",\r\n        \"volatile\": false,\r\n        \"type\": \"Decimotercer\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllPayrollsByEmployeeId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getAllPayrollsByEmployee&employeeId=BOYUl5zyoza7RlP841LY",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getAllPayrollsByEmployee"
+										},
+										{
+											"key": "employeeId",
+											"value": "BOYUl5zyoza7RlP841LY"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getLatestPayroll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getLatestPayroll&employeeId=BOYUl5zyoza7RlP841LY",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getLatestPayroll"
+										},
+										{
+											"key": "employeeId",
+											"value": "BOYUl5zyoza7RlP841LY"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setPayrollTemplate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"setPayrollTemplate\",\r\n    \"newPayroll\": {\r\n        \"id\": \"12345\",\r\n        \"employeeId\": \"emp001\",\r\n        \"firstName\": \"Juan\",\r\n        \"lastName\": \"Pérez\",\r\n        \"nationalId\": \"0102030405\",\r\n        \"birthDate\": \"1990-06-15\",\r\n        \"jobPosition\": \"Ingeniero de Software\",\r\n        \"earnings\": [\r\n            {\r\n                \"description\": \"Sueldo\",\r\n                \"amount\": 1500.50\r\n            },\r\n            {\r\n                \"description\": \"Horas extra\",\r\n                \"amount\": 200.21\r\n            }\r\n        ],\r\n        \"deductions\": [\r\n            {\r\n                \"description\": \"Seguro\",\r\n                \"amount\": 100.00\r\n            },\r\n            {\r\n                \"description\": \"Impuestos\",\r\n                \"amount\": 50.75\r\n            }\r\n        ],\r\n        \"payrollDate\": \"2023-02-20T10:15:00.000Z\",\r\n        \"payrollMonth\": \"2023-02-01\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "downloadPayroll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=downloadPayroll&employeeId=QJCxIiA4xXthqCQbWcpM&payrollId=MnLq3betd1C5lzIXs3B2",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "downloadPayroll"
+										},
+										{
+											"key": "employeeId",
+											"value": "QJCxIiA4xXthqCQbWcpM"
+										},
+										{
+											"key": "payrollId",
+											"value": "MnLq3betd1C5lzIXs3B2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getEmployees13erSueldo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getEmployees13erSueldo",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getEmployees13erSueldo"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getPayrollsByAdmin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getPayrollsByAdmin&adminId=110909039503380068403",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getPayrollsByAdmin"
+										},
+										{
+											"key": "adminId",
+											"value": "110909039503380068403"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get13erSueldoByEmployeeId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=get13erSueldoByEmployeeId&employeeId=BOYUl5zyoza7RlP841LY",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "get13erSueldoByEmployeeId"
+										},
+										{
+											"key": "employeeId",
+											"value": "BOYUl5zyoza7RlP841LY"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Employees",
+					"item": [
+						{
+							"name": "getAllEmployees",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getAllEmployees",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getAllEmployees"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getEmployeeById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getEmployeeById&id=123",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getEmployeeById"
+										},
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createEmployee",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"createEmployee\",\r\n    \"employeeData\": {\r\n        \"firstName\": \"Roberto Luis\",\r\n        \"lastName\": \"Sanchez Obregon\",\r\n        \"nationalId\": \"1234567890\",\r\n        \"birthDate\": \"1990-05-20\",\r\n        \"institutionalEmail\": \"Josesito.Pedrez@instituto.edu.ec\",\r\n        \"workPeriods\": [\r\n            {\r\n                \"jobPosition\": \"Profesor Titular\",\r\n                \"startDate\": \"2020-01-01\",\r\n                \"endDate\": \"2021-01-01\"\r\n            },\r\n            {\r\n                \"jobPosition\": \"Profesor Titular\",\r\n                \"startDate\": \"2021-01-01\",\r\n                \"endDate\": \"Actualmente trabajando\"\r\n            }\r\n        ]\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteEmployee",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"deleteEmployee\",\r\n    \"employeeId\": \"HyNC9k0ZSwWQ83rPzvFL\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateEmployee",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"updateEmployee\",\r\n    \"employeeId\": \"rwUQEaWnc2jLVzc4TDu4\",\r\n    \"employeeData\": {\r\n        \"firstName\": \"Rosita\",\r\n        \"lastName\": \"Fresita\",\r\n        \"nationalId\": \"0987654321\",\r\n        \"birthDate\": \"1990-05-20T00:00:00.000Z\",\r\n        \"institutionalEmail\": \"norma.halo@instituto.edu.ec\",\r\n        \"workPeriods\": [\r\n            {\r\n                \"jobPosition\": \"Profesor Titular\",\r\n                \"startDate\": \"2020-01-01\",\r\n                \"endDate\": \"2021-01-01\"\r\n            },\r\n            {\r\n                \"jobPosition\": \"Profesor Titular\",\r\n                \"startDate\": \"2021-01-01\",\r\n                \"endDate\": \"Actualmente trabajando\"\r\n            }\r\n        ]\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProfilePicture",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getProfilePicture&employeeId=DQQMoOnjiKITaJDyYInp",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getProfilePicture"
+										},
+										{
+											"key": "employeeId",
+											"value": "DQQMoOnjiKITaJDyYInp"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getEmployeeByAdminId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getEmployeeByAdminId&adminId=102417292745266081968",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getEmployeeByAdminId"
+										},
+										{
+											"key": "adminId",
+											"value": "102417292745266081968"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get13erSueldoByEmployeeId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=get13erSueldoByEmployeeId&employeeId=BOYUl5zyoza7RlP841LY",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "get13erSueldoByEmployeeId"
+										},
+										{
+											"key": "employeeId",
+											"value": "BOYUl5zyoza7RlP841LY"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getMonthsFor14Sueldo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getMonthsFor14Sueldo&employeeId=BOYUl5zyoza7RlP841LY",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getMonthsFor14Sueldo"
+										},
+										{
+											"key": "employeeId",
+											"value": "BOYUl5zyoza7RlP841LY"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Calendars",
+					"item": [
+						{
+							"name": "createCalendar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"createCalendar\",\r\n    \"summary\": \"Calendario prueba\",\r\n    \"description\": \"asdasasd\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addRecurringEvent",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"addRecurringEvent\",\r\n    \"calendarId\": \"c_636cf1d2a9a76b2578fc6377746b9cef53ae788fd8c99d82e346f7690bdf4f3a@group.calendar.google.com\",\r\n    \"eventData\": {\r\n        \"summary\": \"Matemáticas\",\r\n        \"startDate\": \"2025-07-24T14:00:00-05:00\",\r\n        \"endDate\": \"2025-07-24T15:00:00-05:00\",\r\n        \"until\": \"20250802T000000Z\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listCalendars",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=listCalendars",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "listCalendars"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listEvents",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=listEvents&calendarId=c_bc94d0f19f3a6fa97da62711a492391e3e050bc35d12be5a03ea5f0846b0cc3f@group.calendar.google.com",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "listEvents"
+										},
+										{
+											"key": "calendarId",
+											"value": "c_bc94d0f19f3a6fa97da62711a492391e3e050bc35d12be5a03ea5f0846b0cc3f@group.calendar.google.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCalendarById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}?action=getCalendarById&calendarId=c_bc94d0f19f3a6fa97da62711a492391e3e050bc35d12be5a03ea5f0846b0cc3f@group.calendar.google.com",
+									"host": [
+										"{{baseURL}}"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "getCalendarById"
+										},
+										{
+											"key": "calendarId",
+											"value": "c_bc94d0f19f3a6fa97da62711a492391e3e050bc35d12be5a03ea5f0846b0cc3f@group.calendar.google.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SendMail",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"sendCalendarToEmployee\",\r\n    \"to\": \"developers@gardneracademy.edu.ec\",\r\n    \"calendarId\": \"c_bf70a6c08e29321be30a02447922f1cb1ecda0bcaaeccde1609027a4bd37373e@group.calendar.google.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCalendar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"deleteCalendar\",\r\n    \"calendarId\": \"c_636cf1d2a9a76b2578fc6377746b9cef53ae788fd8c99d82e346f7690bdf4f3a@group.calendar.google.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
