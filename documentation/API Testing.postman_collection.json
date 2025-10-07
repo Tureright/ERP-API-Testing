@@ -4,7 +4,7 @@
 		"name": "API Testing",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28608011",
-		"_collection_link": "https://erp-gardneracademy.postman.co/workspace/ERP-GardnerAcademy-Workspace~bb6470f3-ebfb-46de-8269-f1ead930b85e/collection/28608011-f5a8e7a2-85f8-4da5-8770-3e1ef911c5ca?action=share&source=collection_link&creator=28608011"
+		"_collection_link": "https://erp-gardneracademy.postman.co/workspace/bb6470f3-ebfb-46de-8269-f1ead930b85e/collection/28608011-f5a8e7a2-85f8-4da5-8770-3e1ef911c5ca?action=share&source=collection_link&creator=28608011"
 	},
 	"item": [
 		{
@@ -24,13 +24,21 @@
 									"\r",
 									"// Save employeeId from the response to an environment variable\r",
 									"const responseJson = pm.response.json();\r",
-									"if (responseJson.employeeId) {\r",
-									"    pm.environment.set(\"employeeId\", responseJson.employeeId);\r",
+									"if (responseJson.data && responseJson.data.employeeId) {\r",
+									"    pm.environment.set(\"employeeId\", responseJson.data.employeeId);\r",
 									"}\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1083,7 +1091,7 @@
 									"\r",
 									"    responseData.data.forEach(function(item) {\r",
 									"        pm.expect(item).to.be.an('object');\r",
-									"        pm.expect(item).to.have.all.keys('id', 'employeeId', 'earnings', 'deductions', 'payrollDate', 'payrollMonth', 'volatile', 'driveId', 'type');\r",
+									"        pm.expect(item).to.have.all.keys('id', 'employeeId', 'earnings', 'deductions', 'payrollDate', 'payrollMonth', 'volatile', 'driveId', 'type', 'adminId');\r",
 									"\r",
 									"        pm.expect(item.earnings).to.be.an('array');\r",
 									"        item.earnings.forEach(function(earning) {\r",
@@ -1106,6 +1114,7 @@
 									"        pm.expect(item.volatile).to.be.a('boolean');\r",
 									"        pm.expect(item.driveId).to.be.a('string');\r",
 									"        pm.expect(item.type).to.be.a('string');\r",
+									"        pm.expect(item.adminId).to.be.a('string');\r",
 									"    });\r",
 									"});\r",
 									"\r",
@@ -1125,7 +1134,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
